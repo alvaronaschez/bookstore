@@ -1,0 +1,22 @@
+{
+    "ISBN": {
+        "oneOf": [
+            {
+                "$ref": "#/ISBN10"
+            },
+            {
+                "$ref": "#/ISBN13"
+            }
+        ]
+    },
+    "ISBN10": {
+        "type": "string",
+        "pattern": "^\\d{10}$",
+        "example": "0132350882"
+    },
+    "ISBN13": {
+        "type": "string",
+        "pattern": "^\\d{13}$",
+        "example": "9780132350884"
+    }
+}

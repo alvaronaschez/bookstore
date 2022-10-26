@@ -1,0 +1,8 @@
+{
+    "Year": {
+        "type": "integer",
+        "maximum": 2100,
+        "minimum": -600,
+        "example": 2021
+    }
+}

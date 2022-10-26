@@ -1,0 +1,521 @@
+openapi: 3.1.0
+security: []
+servers:
+  - url: https://development.gigantic-server.com/v1
+    description: Development server
+info:
+  title: Sample Book Store App
+  description: This is a sample server for a book store.
+  termsOfService: http://example.com/terms/
+  contact:
+    name: API Support
+    url: http://www.example.com/support
+    email: support@example.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.1
+paths:
+  "/authors":
+    get:
+      operationId: getAuthors
+      summary: list all authors
+      tags:
+        - authors
+      responses:
+        "200":
+          description: a list of authors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AuthorOut"
+        "418":
+          description: "I'm a teapot"
+        "500":
+          description: Internal Server Error
+    post:
+      operationId: createAuthor
+      summary: create a new author
+      tags:
+        - authors
+      requestBody:
+        content:
+          aplication/json:
+            schema:
+              $ref: "#/components/schemas/AuthorIn"
+      responses:
+        "201":
+          description: the author you just created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthorOut"
+        "400":
+          description: Bad request
+  "/authors/{authorId}":
+    get:
+      operationId: getAuthorById
+      summary: get an author by id
+      tags:
+        - authors
+      parameters:
+        - name: authorId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/Id"
+      responses:
+        "200":
+          description: an author
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthorOut"
+        "404":
+          description: Not found
+    patch:
+      operationId: partialUpdateAuthor
+      summary: partial update an author
+      tags:
+        - authors
+      parameters:
+        - name: authorId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/Id"
+      requestBody:
+        content:
+          aplication/json:
+            schema:
+              $ref: "#/components/schemas/AuthorPartial"
+      responses:
+        "200":
+          description: the author you just updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthorOut"
+        "400":
+          description: Bad request
+        "404":
+          description: Not found
+    delete:
+      operationId: deleteAuthor
+      summary: delete an author
+      tags:
+        - authors
+      parameters:
+        - name: authorId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/Id"
+      responses:
+        "204":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+        "404":
+          description: Not found
+  "/books":
+    get:
+      operationId: getBooks
+      summary: list all books
+      tags:
+        - books
+      parameters:
+        - in: query
+          name: page
+          schema:
+            $ref: "#/components/schemas/Page"
+        - in: query
+          name: filter
+          schema:
+            $ref: "#/components/schemas/BookFilter"
+      responses:
+        "200":
+          description: a list of books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BookOut"
+        "418":
+          description: "I'm a teapot"
+        "500":
+          description: Internal Server Error
+    post:
+      operationId: createBook
+      summary: create a new book
+      tags:
+        - books
+      requestBody:
+        content:
+          aplication/json:
+            schema:
+              $ref: "#/components/schemas/BookIn"
+      responses:
+        "201":
+          description: the book you just created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookOut"
+        "400":
+          description: Bad request
+  "/books/{bookISBN}":
+    get:
+      operationId: getBookByISBN
+      summary: get a book by ISBN
+      tags:
+        - books
+      parameters:
+        - name: bookISBN
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/ISBN"
+      responses:
+        "200":
+          description: a book
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookOut"
+        "404":
+          description: Not found
+    patch:
+      operationId: partialUpdateBook
+      summary: partial update a book
+      tags:
+        - books
+      parameters:
+        - name: bookISBN
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/ISBN"
+      requestBody:
+        content:
+          aplication/json:
+            schema:
+              $ref: "#/components/schemas/BookInPartial"
+      responses:
+        "200":
+          description: the book you just updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookOut"
+        "400":
+          description: Bad request
+        "404":
+          description: Not found
+    delete:
+      operationId: deleteBook
+      summary: delete a book
+      tags:
+        - books
+      parameters:
+        - name: bookISBN
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/ISBN"
+      responses:
+        "204":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+        "404":
+          description: Not found
+  "/publishers":
+    get:
+      operationId: getPublishers
+      summary: list all publishers
+      tags:
+        - publishers
+      parameters:
+        - in: query
+          name: page
+          schema:
+            $ref: "#/components/schemas/Page"
+        - in: query
+          name: filter
+          schema:
+            $ref: "#/components/schemas/PublisherFilter"
+      responses:
+        "200":
+          description: a list of publishers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PublisherOut"
+        "418":
+          description: "I'm a teapot"
+        "500":
+          description: Internal Server Error
+components:
+  schemas:
+    AuthorIn:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/AuthorBase"
+      additionalProperties: false
+      required:
+        - name
+    AuthorOut:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/AuthorBase"
+      properties:
+        id:
+          $ref: "#/components/schemas/Id"
+      additionalProperties: false
+      required:
+        - id
+        - name
+    AuthorPartial:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/AuthorBase"
+      additionalProperties: false
+    AuthorFilter:
+      type: object
+      properties:
+        name:
+          $ref: "#/components/schemas/RegexFilter"
+        page:
+          $ref: "#/components/schemas/Page"
+      additionalProperties: false
+    AuthorBase:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Robert C. Martin
+        biography:
+          type: string
+          example:
+            Robert Cecil Martin (born 5 December 1952), colloquially called "Uncle
+            Bob", is an American software engineer, instructor, and best-selling author.
+            He is most recognized for developing many software design principles and for
+            being a founder of the influential Agile Manifesto.
+        image:
+          $ref: "#/components/schemas/Link"
+          example: https://en.wikipedia.org/wiki/Robert_C._Martin#/media/File:Robert_C._Martin_surrounded_by_computers.jpg
+    BookIn:
+      allOf:
+        - $ref: "#/components/schemas/BookInPartial"
+      required:
+        - title
+        - authorId
+        - price
+    BookInPartial:
+      allOf:
+        - $ref: "#/components/schemas/BookBase"
+      properties:
+        authorIds:
+          type: array
+          items:
+            $ref: "#/components/schemas/Id"
+          minItems: 1
+          maxItems: 6
+          uniqueItems: true
+        publisherId:
+          $ref: "#/components/schemas/Id"
+    BookOut:
+      allOf:
+        - $ref: "#/components/schemas/BookBase"
+      properties:
+        isbn:
+          $ref: "#/components/schemas/ISBN13"
+        authors:
+          type: array
+          items:
+            $ref: "#/components/schemas/AuthorOut"
+          minItems: 1
+          maxItems: 6
+          uniqueItems: true
+        publisher:
+          $ref: "#/components/schemas/PublisherOut"
+      required:
+        - isbn
+        - author
+        - title
+        - price
+    BookFilter:
+      type: object
+      properties:
+        author:
+          $ref: "#/components/schemas/Id"
+        title:
+          $ref: "#/components/schemas/RegexFilter"
+        price:
+          $ref: "#/components/schemas/PriceFilter"
+        publisher:
+          $ref: "#/components/schemas/Id"
+      additionalProperties: false
+    BookBase:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "Clean Code: A Handbook of Agile Software Craftsmanship"
+        summary:
+          type: string
+          example:
+            "Even bad code can function. But if code isn't clean, it can bring
+            a development organization to its knees. Every year, countless hours and significant
+            resources are lost because of poorly written code. But it doesn't have to
+            be that way. Noted software expert Robert C. Martin presents a revolutionary
+            paradigm with Clean Code: A Handbook of Agile Software Craftsmanship."
+        image:
+          $ref: "#/components/schemas/Link"
+          example: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXiCLaXo-haziow4z37tTCzYgsOZ2Bc2kJfRoedHtDO5l93LMo
+        price:
+          $ref: "#/components/schemas/Price"
+        year:
+          $ref: "#/components/schemas/Year"
+      additionalProperties: false
+    Currency:
+      type: string
+      enum:
+        - EUR
+        - USD
+        - CAD
+      example: USD
+    IntegerFilter:
+      type: object
+      properties:
+        operator:
+          type: string
+          enum:
+            - lt
+            - le
+            - eq
+            - ne
+            - ge
+            - gt
+        operand:
+          type: integer
+      additionalProperties: false
+    RegexFilter:
+      type: string
+      format: regex
+    Id:
+      type: integer
+      format: int64
+      example: 1
+      minimum: 1
+    ISBN:
+      oneOf:
+        - $ref: "#/components/schemas/ISBN10"
+        - $ref: "#/components/schemas/ISBN13"
+    ISBN10:
+      type: string
+      pattern: "^\\d{10}$"
+      example: "0132350882"
+    ISBN13:
+      type: string
+      pattern: "^\\d{13}$"
+      example: "9780132350884"
+    Link:
+      type: string
+      format: uri
+      pattern: "^https?://"
+    Page:
+      type: object
+      properties:
+        offset:
+          type: integer
+          minimum: 0
+          default: 0
+        limit:
+          type: integer
+          exclusiveMinimum: 0
+          maximum: 1000
+          default: 100
+      additionalProperties: false
+    Price:
+      type: object
+      properties:
+        currency:
+          $ref: "#/components/schemas/Currency"
+        value:
+          type: integer
+          minimum: 0
+          description: value in cents
+          example: 1050
+      required:
+        - currency
+        - value
+      additionalProperties: false
+    PriceFilter:
+      type: object
+      properties:
+        currency:
+          $ref: "#/components/schemas/Currency"
+        value:
+          $ref: "#/components/schemas/IntegerFilter"
+      required:
+        - currency
+        - value
+      additionalProperties: false
+    PublisherOut:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/PublisherBase"
+      properties:
+        id:
+          $ref: "#/components/schemas/Id"
+      required:
+        - id
+        - name
+      additionalProperties: false
+    PublisherIn:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/PublisherBase"
+      required:
+        - name
+      additionalProperties: false
+    PublisherPartial:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/PublisherBase"
+      additionalProperties: false
+    PublisherFilter:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/PublisherBase"
+      properties:
+        name:
+          $ref: "#/components/schemas/RegexFilter"
+        page:
+          $ref: "#/components/schemas/Page"
+      additionalProperties: false
+    PublisherBase:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Manning Publications
+        website:
+          $ref: "#/components/schemas/Link"
+          example: www.manning.com
+    Year:
+      type: integer
+      maximum: 2100
+      minimum: -600
+      example: 2021

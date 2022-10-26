@@ -1,0 +1,71 @@
+{
+    "AuthorIn": {
+        "$ref": "schemas/author.json#/AuthorIn"
+    },
+    "AuthorOut": {
+        "$ref": "schemas/author.json#/AuthorOut"
+    },
+    "AuthorPartial": {
+        "$ref": "schemas/author.json#/AuthorPartial"
+    },
+    "AuthorFilter": {
+        "$ref": "schemas/author.json#/AuthorFilter"
+    },
+    "BookIn": {
+        "$ref": "schemas/book.json#/BookIn"
+    },
+    "BookOut": {
+        "$ref": "schemas/book.json#/BookOut"
+    },
+    "BookInPartial": {
+        "$ref": "schemas/book.json#/BookInPartial"
+    },
+    "BookFilter": {
+        "$ref": "schemas/book.json#/BookFilter"
+    },
+    "Currency": {
+        "$ref": "schemas/currency.json#/Currency"
+    },
+    "Filter": {
+        "$ref": "schemas/filter.json/IntegerFilter"
+    },
+    "RegexFilter": {
+        "$ref": "schemas/filter.json/RegexFilter"
+    },
+    "Id": {
+        "$ref": "schemas/id.json#/Id"
+    },
+    "ISBN": {
+        "$ref": "schemas/isbn.json#/ISBN"
+    },
+    "ISBN10": {
+        "$ref": "schemas/isbn.json#/ISBN10"
+    },
+    "ISBN13": {
+        "$ref": "schemas/isbn.json#/ISBN13"
+    },
+    "Link": {
+        "$ref": "schemas/link.json#/Link"
+    },
+    "Page": {
+        "$ref": "schemas/page.json#/Page"
+    },
+    "Price": {
+        "$ref": "schemas/price.json#/Price"
+    },
+    "PublisherIn": {
+        "$ref": "schemas/publisher.json#/PublisherIn"
+    },
+    "PublisherOut": {
+        "$ref": "schemas/publisher.json#/PublisherOut"
+    },
+    "PublisherPartial": {
+        "$ref": "schemas/publisher.json#/PublisherPartial"
+    },
+    "PublisherFilter": {
+        "$ref": "schemas/publisher.json#/PublisherFilter"
+    },
+    "Year": {
+        "$ref": "schemas/year.json#/Year"
+    }
+}

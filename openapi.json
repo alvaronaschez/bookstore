@@ -1,0 +1,422 @@
+{
+    "openapi": "3.1.0",
+    "security": [],
+    "servers": [
+        {
+            "url": "https://development.gigantic-server.com/v1",
+            "description": "Development server"
+        }
+    ],
+    "info": {
+        "title": "Sample Book Store App",
+        "description": "This is a sample server for a book store.",
+        "termsOfService": "http://example.com/terms/",
+        "contact": {
+            "name": "API Support",
+            "url": "http://www.example.com/support",
+            "email": "support@example.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.1"
+    },
+    "paths": {
+        "/authors": {
+            "get": {
+                "operationId": "getAuthors",
+                "summary": "list all authors",
+                "tags": [
+                    "authors"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "a list of authors",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "schemas/author.json#/AuthorOut"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            },
+            "post": {
+                "operationId": "createAuthor",
+                "summary": "create a new author",
+                "tags": [
+                    "authors"
+                ],
+                "requestBody": {
+                    "content": {
+                        "aplication/json": {
+                            "schema": {
+                                "$ref": "schemas/author.json#/AuthorIn"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "the author you just created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/author.json#/AuthorOut"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        },
+        "/authors/{authorId}": {
+            "get": {
+                "operationId": "getAuthorById",
+                "summary": "get an author by id",
+                "tags": [
+                    "authors"
+                ],
+                "parameters": [
+                    {
+                        "name": "authorId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "$ref": "schemas/id.json#/Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "an author",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/author.json#/AuthorOut"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            },
+            "patch": {
+                "operationId": "partialUpdateAuthor",
+                "summary": "partial update an author",
+                "tags": [
+                    "authors"
+                ],
+                "parameters": [
+                    {
+                        "name": "authorId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "$ref": "schemas/id.json#/Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "aplication/json": {
+                            "schema": {
+                                "$ref": "schemas/author.json#/AuthorPartial"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "the author you just updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/author.json#/AuthorOut"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "deleteAuthor",
+                "summary": "delete an author",
+                "tags": [
+                    "authors"
+                ],
+                "parameters": [
+                    {
+                        "name": "authorId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "$ref": "schemas/id.json#/Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/books": {
+            "get": {
+                "operationId": "getBooks",
+                "summary": "list all books",
+                "tags": [
+                    "books"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "schema": {
+                            "$ref": "schemas/page.json#/Page"
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "filter",
+                        "schema": {
+                            "$ref": "schemas/book.json#/BookFilter"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "a list of books",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "schemas/book.json#/BookOut"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            },
+            "post": {
+                "operationId": "createBook",
+                "summary": "create a new book",
+                "tags": [
+                    "books"
+                ],
+                "requestBody": {
+                    "content": {
+                        "aplication/json": {
+                            "schema": {
+                                "$ref": "schemas/book.json#/BookIn"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "the book you just created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/book.json#/BookOut"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        },
+        "/books/{bookISBN}": {
+            "get": {
+                "operationId": "getBookByISBN",
+                "summary": "get a book by ISBN",
+                "tags": [
+                    "books"
+                ],
+                "parameters": [
+                    {
+                        "name": "bookISBN",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "$ref": "schemas/isbn.json#/ISBN"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "a book",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/book.json#/BookOut"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            },
+            "patch": {
+                "operationId": "partialUpdateBook",
+                "summary": "partial update a book",
+                "tags": [
+                    "books"
+                ],
+                "parameters": [
+                    {
+                        "name": "bookISBN",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "$ref": "schemas/isbn.json#/ISBN"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "aplication/json": {
+                            "schema": {
+                                "$ref": "schemas/book.json#/BookInPartial"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "the book you just updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/book.json#/BookOut"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "deleteBook",
+                "summary": "delete a book",
+                "tags": [
+                    "books"
+                ],
+                "parameters": [
+                    {
+                        "name": "bookISBN",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "$ref": "schemas/isbn.json#/ISBN"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        }
+    },
+    "/publishers": {
+        "get": {
+            "operationId": "getPublishers",
+            "summary": "list all publishers",
+            "tags": [
+                "publishers"
+            ],
+            "parameters": [
+                {
+                    "in": "query",
+                    "name": "page",
+                    "schema": {
+                        "$ref": "schemas/page.json#/Page"
+                    }
+                },
+                {
+                    "in": "query",
+                    "name": "filter",
+                    "schema": {
+                        "$ref": "schemas/publisher.json#/PublisherFilter"
+                    }
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "a list of publishers",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "schemas/publisher.json#/PublisherOut"
+                                }
+                            }
+                        }
+                    }
+                },
+                "500": {
+                    "description": "Internal Server Error"
+                }
+            }
+        }
+    }
+}

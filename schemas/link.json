@@ -1,0 +1,7 @@
+{
+    "Link": {
+        "type": "string",
+        "format": "uri",
+        "pattern": "^https?://"
+    }
+}

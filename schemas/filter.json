@@ -1,0 +1,26 @@
+{
+    "IntegerFilter": {
+        "type": "object",
+        "properties": {
+            "operator": {
+                "type": "string",
+                "enum": [
+                    "lt",
+                    "le",
+                    "eq",
+                    "ne",
+                    "ge",
+                    "gt"
+                ]
+            },
+            "operand": {
+                "type": "integer"
+            }
+        },
+        "additionalProperties": false
+    },
+    "RegexFilter": {
+        "type": "string",
+        "format": "regex"
+    }
+}

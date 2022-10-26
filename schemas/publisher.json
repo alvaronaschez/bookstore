@@ -1,0 +1,71 @@
+{
+    "PublisherOut": {
+        "type": "object",
+        "allOf": [
+            {
+                "$ref": "#/PublisherBase"
+            }
+        ],
+        "properties": {
+            "id": {
+                "$ref": "id.json#/Id"
+            }
+        },
+        "required": [
+            "id",
+            "name"
+        ],
+        "additionalProperties": false
+    },
+    "PublisherIn": {
+        "type": "object",
+        "allOf": [
+            {
+                "$ref": "#/PublisherBase"
+            }
+        ],
+        "required": [
+            "name"
+        ],
+        "additionalProperties": false
+    },
+    "PublisherPartial": {
+        "type": "object",
+        "allOf": [
+            {
+                "$ref": "#/PublisherBase"
+            }
+        ],
+        "additionalProperties": "false"
+    },
+    "PublisherFilter": {
+        "type": "object",
+        "allOf": [
+            {
+                "$ref": "#/PublisherBase"
+            }
+        ],
+        "properties": {
+            "name": {
+                "$ref": "filter.json#/RegexFilter"
+            },
+            "page": {
+                "$ref": "page.json#/Page"
+            }
+        },
+        "additionalProperties": false
+    },
+    "PublisherBase": {
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string",
+                "example": "Manning Publications"
+            },
+            "website": {
+                "$ref": "link.json#/Link",
+                "example": "www.manning.com"
+            }
+        }
+    }
+}

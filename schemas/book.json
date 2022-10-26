@@ -1,0 +1,107 @@
+{
+    "BookIn": {
+        "allOf": [
+            {
+                "$ref": "#/BookInPartial"
+            }
+        ],
+        "required": [
+            "title",
+            "authorId",
+            "price"
+        ]
+    },
+    "BookInPartial": {
+        "allOf": [
+            {
+                "$ref": "#/BookBase"
+            }
+        ],
+        "properties": {
+            "authorIds": {
+                "type": "array",
+                "items": {
+                    "$ref": "id.json#/Id"
+                },
+                "minItems": 1,
+                "maxItems": 6,
+                "uniqueItems": true
+            },
+            "publisherId": {
+                "$ref": "id.json#/Id"
+            }
+        }
+    },
+    "BookOut": {
+        "allOf": [
+            {
+                "$ref": "#/BookBase"
+            }
+        ],
+        "properties": {
+            "isbn": {
+                "$ref": "isbn.json#/ISBN13"
+            },
+            "authors": {
+                "type": "array",
+                "items": {
+                    "$ref": "author.json#/AuthorOut"
+                },
+                "minItems": 1,
+                "maxItems": 6,
+                "uniqueItems": true
+            },
+            "publisher": {
+                "$ref": "publisher.json#/PublisherOut"
+            }
+        },
+        "required": [
+            "isbn",
+            "author",
+            "title",
+            "price"
+        ]
+    },
+    "BookFilter": {
+        "type": "object",
+        "properties": {
+            "author": {
+                "$ref": "id.json#/Id"
+            },
+            "title": {
+                "$ref": "filter.json#/RegexFilter"
+            },
+            "price": {
+                "$ref": "price.json#/PriceFilter"
+            },
+            "publisher": {
+                "$ref": "id.json#/Id"
+            }
+        },
+        "additionalProperties": false
+    },
+    "BookBase": {
+        "type": "object",
+        "properties": {
+            "title": {
+                "type": "string",
+                "example": "Clean Code: A Handbook of Agile Software Craftsmanship"
+            },
+            "summary": {
+                "type": "string",
+                "example": "Even bad code can function. But if code isn't clean, it can bring a development organization to its knees. Every year, countless hours and significant resources are lost because of poorly written code. But it doesn’t have to be that way. Noted software expert Robert C. Martin presents a revolutionary paradigm with Clean Code: A Handbook of Agile Software Craftsmanship."
+            },
+            "image": {
+                "$ref": "link.json#/Link",
+                "example": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXiCLaXo-haziow4z37tTCzYgsOZ2Bc2kJfRoedHtDO5l93LMo"
+            },
+            "price": {
+                "$ref": "price.json#/Price"
+            },
+            "year": {
+                "$ref": "year.json#/Year"
+            }
+        },
+        "additionalProperties": false
+    }
+}

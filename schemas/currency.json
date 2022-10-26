@@ -1,0 +1,11 @@
+{
+    "Currency": {
+        "type": "string",
+        "enum": [
+            "EUR",
+            "USD",
+            "CAD"
+        ],
+        "example": "USD"
+    }
+}

@@ -1,0 +1,16 @@
+.idea
+.vscode/*
+!.vscode/settings.json
+!.vscode/launch.json
+*.egg-info
+.venv
+.env
+.coverage
+
+__pycache__/
+.pytest_cache
+.python-version
+.DS_Store
+
+.postgres-data/
+node_modules

@@ -1,0 +1,70 @@
+{
+    "AuthorIn": {
+        "type": "object",
+        "allOf": [
+            {
+                "$ref": "#/AuthorBase"
+            }
+        ],
+        "additionalProperties": false,
+        "required": [
+            "name"
+        ]
+    },
+    "AuthorOut": {
+        "type": "object",
+        "allOf": [
+            {
+                "$ref": "#/AuthorBase"
+            }
+        ],
+        "properties": {
+            "id": {
+                "$ref": "id.json#/Id"
+            }
+        },
+        "additionalProperties": false,
+        "required": [
+            "id",
+            "name"
+        ]
+    },
+    "AuthorPartial": {
+        "type": "object",
+        "allOf": [
+            {
+                "$ref": "#/AuthorBase"
+            }
+        ],
+        "additionalProperties": false
+    },
+    "AuthorFilter": {
+        "type": "object",
+        "properties": {
+            "name": {
+                "$ref": "filter.json#/RegexFilter"
+            },
+            "page": {
+                "$ref": "page.json#/Page"
+            }
+        },
+        "additionalProperties": false
+    },
+    "AuthorBase": {
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string",
+                "example": "Robert C. Martin"
+            },
+            "biography": {
+                "type": "string",
+                "example": "Robert Cecil Martin (born 5 December 1952), colloquially called \"Uncle Bob\", is an American software engineer, instructor, and best-selling author. He is most recognized for developing many software design principles and for being a founder of the influential Agile Manifesto."
+            },
+            "image": {
+                "$ref": "link.json#/Link",
+                "example": "https://en.wikipedia.org/wiki/Robert_C._Martin#/media/File:Robert_C._Martin_surrounded_by_computers.jpg"
+            }
+        }
+    }
+}
